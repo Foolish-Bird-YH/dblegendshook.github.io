@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024龙珠码生成器</title>
+</head>
+
+<body>
+    <p>
+        好友码格式: (abcABC) or QR Data (4,abcABC)
+    </p>
+    <div>
+        <label for="playerID">#1 好友码</label>
+        <input id="playerID1" name="playerID1" size="40" type="text">
+    </div>
+    <div>
+        <label for="playerID">#2 好友码</label>
+        <input id="playerID2" name="playerID2" size="40" type="text">
+    </div>
+    <div>
+        <label for="playerID">#3 好友码</label>
+        <input id="playerID3" name="playerID3" size="40" type="text">
+    </div>
+    <button type="submit" id="qr-dbl-submit">生成好友码</button>
+    <iframe id="qr-dbl-img1" src="about:blank"></iframe>
+    <iframe id="qr-dbl-img2" src="about:blank"></iframe>
+    <iframe id="qr-dbl-img3" src="about:blank"></iframe>
+</body>
+<script>
+    var $submit = document.getElementById("qr-dbl-submit");
+    var getQR = function (QR) {
+        var res = {};
+        var n2t = {
+            0: 'B',
+            1: 'C',
+            2: 'D',
+            3: 'E',
+            4: 'F',
+            5: 'G',
+            6: 'H',
+            7: 'J',
+            8: 'K',
+            9: 'M',
+            a: 'N',
+            b: 'P',
+            c: 'Q',
+            d: 'R',
+            e: 'S',
+            f: 'T',
+        };
+        var timestamp = Date.now().toString(16).split("");
+        var timeText = "";
+        timestamp.forEach(function (e) {
+            timeText += n2t[e]
+        });
+        var qrSplit = QR.trim().split(",");
+        if (!qrSplit[1] && !qrSplit[0])
+            return null;
+        else if (qrSplit[1])
+            res.id = qrSplit[1].match(/[a-z0-9]/g).join("");
+        else
+            res.id = qrSplit[0].match(/[a-z0-9]/g).join("");
+        res.qr = res.id + timeText;
+        return res.qr
+    }
+    var genImg = function (playerNumber) {
+        var QR = getQR(document.getElementById("playerID" + playerNumber).value);
+        var qrCodeUrl = 'https://tool.oschina.net/action/qrcode/generate?data=' + encodeURI("4," + QR) + '&output=image%2Fgif&error=L&type=0&margin=20&size=4'
+        document.getElementById("qr-dbl-img" + playerNumber).style.display = 'block';
+        document.getElementById("qr-dbl-img" + playerNumber).src = qrCodeUrl;
+    };
+    var saveQR = function () {
+        if (localStorage) {
+            var sQR = [getPlayerID(document.getElementById("playerID1").value), getPlayerID(document.getElementById("playerID2").value), getPlayerID(document.getElementById("playerID3").value),];
+            var sQRS = [];
+            if (sQR[0])
+                sQRS.push(sQR[0]);
+            if (sQR[1])
+                sQRS.push(sQR[1]);
+            if (sQR[2])
+                sQRS.push(sQR[2]);
+            localStorage.setItem("dblqr", sQRS.join(","))
+        }
+    }
+    var loadQR = function () {
+        var $inputs = [document.getElementById("playerID1"), document.getElementById("playerID2"), document.getElementById("playerID3"),];
+        if (localStorage) {
+            var sQR = localStorage.getItem("dblqr");
+            sQR = sQR ? sQR.split(",") : [];
+            if (sQR[0])
+                $inputs[0].value = sQR[0];
+            if (sQR[1])
+                $inputs[1].value = sQR[1];
+            if (sQR[2])
+                $inputs[2].value = sQR[2]
+        }
+    }
+    var getPlayerID = function (qrstring) {
+        var qrsArr = qrstring.trim().split(",");
+        if (!qrsArr[1] && !qrsArr[0])
+            return null;
+        else if (qrsArr[1])
+            return qrsArr[1].toLowerCase();
+        else
+            return qrsArr[0].toLowerCase()
+    }
+    if ($submit) {
+        loadQR();
+        $submit.onclick = function () {
+            genImg(1);
+            genImg(2);
+            genImg(3);
+            //saveQR();
+        }
+    }
+</script>
+
+</html>
