@@ -23,7 +23,8 @@
         <span class="ml-3 text-xl">BadLuck Hook</span>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a href="qr_gen.html" class="mr-5 px-2 py-2 font-semibold text-sm bg-white text-slate-700 border border-slate-300 rounded-md shadow-sm ring-2 ring-offset-2 ring-offset-slate-50 ring-red-500 dark:ring-offset-slate-900 dark:bg-slate-700 dark:text-slate-200 dark:border-transparent">点这里龙珠码生成!</a>
+        <a href="qr_gen.html"
+          class="mr-5 px-2 py-2 font-semibold text-sm bg-white text-slate-700 border border-slate-300 rounded-md shadow-sm ring-2 ring-offset-2 ring-offset-slate-50 ring-red-500 dark:ring-offset-slate-900 dark:bg-slate-700 dark:text-slate-200 dark:border-transparent">点这里龙珠码生成!</a>
         <a href="javascript:void(0);" onclick="scrollToBottom();" class="mr-5 hover:text-gray-900">打赏 :)</a>
         <a href="https://qm.qq.com/q/jjp5kkqJh0" class="mr-5 hover:text-gray-900">QQ群</a>
         <a href="https://space.bilibili.com/20911627" class="mr-5 hover:text-gray-900">Bilibili</a>
@@ -66,11 +67,44 @@
       </div>
     </div>
   </section>
+  <div class="img-container">
+    <img src="vx.png" alt="一个示例图片">
+    <img src="zfb.png" alt="一个示例图片">
+  </div>
+  <style>
+    .img-container {
+      display: flex;
+      justify-content: center;
+      /* 水平居中 */
+      align-items: center;
+      /* 垂直居中（如果图片是单行的）*/
+      height: 100vh;
+      /* 示例高度，可以根据需要调整 */
+    }
+
+    .img-container img {
+      max-width: 25%;
+      /* 限制图片宽度 */
+      height: auto;
+      /* 保持图片比例 */
+      margin: 0 10px;
+      /* 图片之间的间距 */
+    }
+
+    /* 移除第一张图片左侧的间距和最后一张图片右侧的间距 */
+    .img-container img:first-child {
+      margin-left: 0;
+    }
+
+    .img-container img:last-child {
+      margin-right: 0;
+    }
+  </style>
   <script>
     function scrollToBottom() {
       window.scrollTo(0, document.body.scrollHeight);
     }
-    function DownloadFile(){
+    function DownloadFile() {
       window.location.href = "https://www.baidu.com";
     }
   </script>
