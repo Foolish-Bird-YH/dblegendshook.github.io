@@ -24,8 +24,11 @@
         <input id="playerID3" name="playerID3" size="40" type="text">
     </div>
     <button type="submit" id="qr-dbl-submit">生成好友码</button>
+    <p>#1</p>
     <iframe id="qr-dbl-img1" src="about:blank"></iframe>
+    <p>#2</p>
     <iframe id="qr-dbl-img2" src="about:blank"></iframe>
+    <p>#3</p>
     <iframe id="qr-dbl-img3" src="about:blank"></iframe>
 </body>
 <script>
@@ -66,7 +69,10 @@
         return res.qr
     }
     var genImg = function (playerNumber) {
-        var QR = getQR(document.getElementById("playerID" + playerNumber).value);
+        let p_value = document.getElementById("playerID" + playerNumber).value;
+        if (p_value == '')
+            return;
+        var QR = getQR(p_value);
         var qrCodeUrl = 'https://tool.oschina.net/action/qrcode/generate?data=' + encodeURI("4," + QR) + '&output=image%2Fpng&error=L&type=0&margin=10&size=4'
         document.getElementById("qr-dbl-img" + playerNumber).style.display = 'block';
         document.getElementById("qr-dbl-img" + playerNumber).src = qrCodeUrl;
